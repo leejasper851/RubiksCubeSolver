@@ -23,13 +23,28 @@ public class CubeSolverRunner {
 		System.out.println();
 		
 		String faceColsStr = "";
-		String whiteFace = getFace("Turn to the face with the white center piece. Make sure the face with the blue center piece is above. List the colors: ", 'w');
-		String greenFace = getFace("Turn to the face with the green center piece and the white center piece face on top. List the colors: ", 'g');
-		String redFace = getFace("Turn to the face with the red center piece and the white center piece face on top. List the colors: ", 'r');
-		String blueFace = getFace("Turn to the face with the blue center piece and the white center piece face on top. List the colors: ", 'b');
-		String orangeFace = getFace("Turn to the face with the orange center piece and the white center piece face on top. List the colors: ", 'o');
-		String yellowFace = getFace("Turn to the face with the yellow center piece and the green center piece face on top. List the colors: ", 'y');
-		faceColsStr = whiteFace + greenFace + redFace + blueFace + orangeFace + yellowFace;
+		boolean correct = true;
+		Map<Character, Integer> strNums = Map.of('w', 0, 'g', 1, 'r', 2, 'b', 3, 'o', 4, 'y', 5);
+		do {
+			faceColsStr = "";
+			String whiteFace = getFace("Turn to the face with the white center piece. Make sure the face with the blue center piece is above. List the colors: ", 'w');
+			String greenFace = getFace("Turn to the face with the green center piece and the white center piece face on top. List the colors: ", 'g');
+			String redFace = getFace("Turn to the face with the red center piece and the white center piece face on top. List the colors: ", 'r');
+			String blueFace = getFace("Turn to the face with the blue center piece and the white center piece face on top. List the colors: ", 'b');
+			String orangeFace = getFace("Turn to the face with the orange center piece and the white center piece face on top. List the colors: ", 'o');
+			String yellowFace = getFace("Turn to the face with the yellow center piece and the green center piece face on top. List the colors: ", 'y');
+			faceColsStr = whiteFace + greenFace + redFace + blueFace + orangeFace + yellowFace;
+			
+			correct = true;
+			int[] colCounts = new int[6];
+			for (int i = 0; i < 54; i++) {
+				colCounts[strNums.get(faceColsStr.charAt(i))]++;
+			}
+			if (colCounts[0] != 9 || colCounts[1] != 9 || colCounts[2] != 9 || colCounts[3] != 9 || colCounts[4] != 9 || colCounts[5] != 9) {
+				System.out.println("Make sure you enter nine total tiles of each color.\n");
+				correct = false;
+			}
+		} while (!correct);
 		
 		Color[][][] faceCols = new Color[6][3][3];
 		Map<Character, Color> strCols = Map.of('w', Color.WHITE, 'g', Color.GREEN, 'r', Color.RED, 'b', Color.BLUE, 'o', Color.ORANGE, 'y', Color.YELLOW);
